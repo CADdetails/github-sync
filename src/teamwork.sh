@@ -94,7 +94,7 @@ teamwork::add_comment() {
   response=$(curl -X "POST" "$TEAMWORK_URI/projects/api/v1/tasks/$TEAMWORK_TASK_ID/comments.json" \
        -u "$TEAMWORK_API_TOKEN"':' \
        -H 'Content-Type: application/json; charset=utf-8' \
-       -d "{ \"comment\": { \"body\": \"${body//\"/}\", \"notify\": true, \"content-type\": \"text\", \"isprivate\": false } }" )
+       -d "{ \"comment\": { \"body\": \"${body//\"/}\", \"notify\": \"programming\", \"content-type\": \"text\", \"isprivate\": false } }" )
 
   log::message "$response"
 }
@@ -149,7 +149,6 @@ teamwork::pull_request_opened() {
 **$user** opened a PR: **$pr_title**
 [$pr_url]($pr_url)
 \`$base_ref\` ⬅️ \`$head_ref\`
-For App: $APP_NAME
 
 ---
 
@@ -175,6 +174,11 @@ teamwork::pull_request_closed() {
     teamwork::add_comment "
 **$user** merged a PR: **$pr_title**
 [$pr_url]($pr_url)
+
+---
+
+$APP_NAME has been deployed to Staging
+[$STAGING_URL]($STAGING_URL)
 "
   teamwork::add_tag "PR Merged"
   teamwork::remove_tag "PR Open"

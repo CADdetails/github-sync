@@ -21,6 +21,7 @@ main() {
   export BOARD_COLUMN_MERGED="$6"
   export BOARD_COLUMN_CLOSED="$7"
   export APP_NAME="$8"
+  export STAGING_URL="$9"
 
   env::set_environment
 
@@ -35,9 +36,6 @@ main() {
 
   local -r event=$(github::get_event_name)
   local -r action=$(github::get_action)
-
-  log::message "APP_NAME = " $8
-  log::message "APP_NAME = " $APP_NAME
 
   log::message "Event: $event - Action: $action"
 
