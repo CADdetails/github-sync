@@ -20,9 +20,8 @@ main() {
   export BOARD_COLUMN_OPENED="$5"
   export BOARD_COLUMN_MERGED="$6"
   export BOARD_COLUMN_CLOSED="$7"
-  export NOTIFICATION_LIST="$8"
-  export APP_NAME="$9"
-  export STAGING_URL="$10"
+  export APP_NAME="$8"
+  export STAGING_URL="$9"
 
   env::set_environment
 

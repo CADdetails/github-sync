@@ -94,7 +94,7 @@ teamwork::add_comment() {
   response=$(curl -X "POST" "$TEAMWORK_URI/projects/api/v1/tasks/$TEAMWORK_TASK_ID/comments.json" \
        -u "$TEAMWORK_API_TOKEN"':' \
        -H 'Content-Type: application/json; charset=utf-8' \
-       -d "{ \"comment\": { \"body\": \"${body//\"/}\", \"notify\": \"$NOTIFICATION_LIST\", \"content-type\": \"text\", \"isprivate\": false } }" )
+       -d "{ \"comment\": { \"body\": \"${body//\"/}\", \"notify\": true, \"content-type\": \"text\", \"isprivate\": false } }" )
 
   log::message "$response"
 }
@@ -169,17 +169,21 @@ teamwork::pull_request_closed() {
   local -r pr_url=$(github::get_pr_url)
   local -r pr_title=$(github::get_pr_title)
   local -r pr_merged=$(github::get_pr_merged)
+  local -r head_ref=$(github::get_head_ref)
+  local -r base_ref=$(github::get_base_ref)
 
   if [ "$pr_merged" == "true" ]; then
     teamwork::add_comment "
 **$user** merged a PR: **$pr_title**
 [$pr_url]($pr_url)
+\`$base_ref\` ⬅️ \`$head_ref\`
 
 ---
 
 $APP_NAME has been deployed to Staging
 [$STAGING_URL]($STAGING_URL)
 "
+
   teamwork::add_tag "PR Merged"
   teamwork::remove_tag "PR Open"
   teamwork::remove_tag "PR Approved"
