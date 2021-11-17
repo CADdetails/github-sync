@@ -32,6 +32,10 @@ inputs:
     description: 'The name of the Azure Web App that this will deploy to'
     required: false
     default: ''
+  STAGING_URL:
+    description: 'The URL for the staging site the App deployed to'
+    required: false
+    default: ''
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -44,3 +48,4 @@ runs:
     - ${{ inputs.BOARD_COLUMN_MERGED }}
     - ${{ inputs.BOARD_COLUMN_CLOSED }}
     - ${{ inputs.APP_NAME }}
+    - ${{ inputs.STAGING_URL }}

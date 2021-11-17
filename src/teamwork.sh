@@ -149,7 +149,6 @@ teamwork::pull_request_opened() {
 **$user** opened a PR: **$pr_title**
 [$pr_url]($pr_url)
 \`$base_ref\` ⬅️ \`$head_ref\`
-For App: $APP_NAME
 
 ---
 
@@ -170,12 +169,21 @@ teamwork::pull_request_closed() {
   local -r pr_url=$(github::get_pr_url)
   local -r pr_title=$(github::get_pr_title)
   local -r pr_merged=$(github::get_pr_merged)
+  local -r head_ref=$(github::get_head_ref)
+  local -r base_ref=$(github::get_base_ref)
 
   if [ "$pr_merged" == "true" ]; then
     teamwork::add_comment "
 **$user** merged a PR: **$pr_title**
 [$pr_url]($pr_url)
+\`$base_ref\` ⬅️ \`$head_ref\`
+
+---
+
+$APP_NAME has been deployed to Staging
+[$STAGING_URL]($STAGING_URL)
 "
+
   teamwork::add_tag "PR Merged"
   teamwork::remove_tag "PR Open"
   teamwork::remove_tag "PR Approved"
