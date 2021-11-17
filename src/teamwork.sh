@@ -149,6 +149,7 @@ teamwork::pull_request_opened() {
 **$user** opened a PR: **$pr_title**
 [$pr_url]($pr_url)
 \`$base_ref\` ⬅️ \`$head_ref\`
+For App: $APP_NAME
 
 ---
 
