@@ -152,6 +152,11 @@ teamwork::pull_request_opened() {
 
 ---
 
+$APP_NAME has been deployed to a new Dev slot
+[$SLOT_URL]($SLOT_URL)
+
+---
+
 ${pr_body}
 
 ---
@@ -181,7 +186,7 @@ teamwork::pull_request_closed() {
 ---
 
 $APP_NAME has been deployed to Staging
-[$STAGING_URL]($STAGING_URL)
+[$SLOT_URL]($SLOT_URL)
 "
 
   teamwork::add_tag "PR Merged"

@@ -21,7 +21,7 @@ main() {
   export BOARD_COLUMN_MERGED="$6"
   export BOARD_COLUMN_CLOSED="$7"
   export APP_NAME="$8"
-  export STAGING_URL="$9"
+  export SLOT_URL="$9"
 
   env::set_environment
 
