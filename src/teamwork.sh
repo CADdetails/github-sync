@@ -146,22 +146,23 @@ teamwork::pull_request_opened() {
   IFS=" " read -r -a pr_stats_array <<< "$pr_stats"
 
   teamwork::add_comment "
+## PR Opened
+
 **$user** opened a PR: **$pr_title**
-[$pr_url]($pr_url)
+
+Review PR Here: [$pr_url]($pr_url)
+
+---
+
 \`$base_ref\` ⬅️ \`$head_ref\`
 
----
-
-$APP_NAME has been deployed to a new Dev slot
-[$SLOT_URL]($SLOT_URL)
+🔢 ${pr_stats_array[0]} commits / 📝 ${pr_stats_array[1]} files updated / ➕ ${pr_stats_array[2]} additions / ➖ ${pr_stats_array[3]} deletions
 
 ---
+
+## PR Details & Testing Notes
 
 ${pr_body}
-
----
-
-🔢 ${pr_stats_array[0]} commits / 📝 ${pr_stats_array[1]} files updated / ➕ ${pr_stats_array[2]} additions / ➖ ${pr_stats_array[3]} deletions
 
   "
 
@@ -179,14 +180,17 @@ teamwork::pull_request_closed() {
 
   if [ "$pr_merged" == "true" ]; then
     teamwork::add_comment "
+
+## PR Merged
+
 **$user** merged a PR: **$pr_title**
-[$pr_url]($pr_url)
-\`$base_ref\` ⬅️ \`$head_ref\`
+
+PR Link: [$pr_url]($pr_url)
 
 ---
 
-$APP_NAME has been deployed to Staging
-[$SLOT_URL]($SLOT_URL)
+\`$base_ref\` ⬅️ \`$head_ref\`
+
 "
 
   teamwork::add_tag "PR Merged"
@@ -195,8 +199,12 @@ $APP_NAME has been deployed to Staging
   teamwork::move_task_to_column "$BOARD_COLUMN_MERGED"
   else
     teamwork::add_comment "
+
+## PR Closed
+
 **$user** closed a PR without merging: **$pr_title**
-[$pr_url]($pr_url)
+
+PR Link: [$pr_url]($pr_url)
 "
     teamwork::remove_tag "PR Open"
     teamwork::remove_tag "PR Approved"
@@ -215,14 +223,13 @@ teamwork::pull_request_review_submitted() {
   if [ "$review_state" == "approved" ]; then
     teamwork::add_comment "
 **$user** submitted a review to the PR: **$pr_title**
-[$pr_url]($pr_url)
+PR Link: [$pr_url]($pr_url)
 
 ---
 
 Review: **$review_state**
 $comment
 "
-    teamwork::add_tag "PR Approved"
   fi
 }
 
