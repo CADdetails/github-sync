@@ -146,7 +146,9 @@ teamwork::pull_request_opened() {
   IFS=" " read -r -a pr_stats_array <<< "$pr_stats"
 
   teamwork::add_comment "
-## PR Opened
+### PR Opened
+
+---
 
 **$user** opened a PR: **$pr_title**
 
@@ -160,7 +162,11 @@ Review PR Here: [$pr_url]($pr_url)
 
 ---
 
-## PR Details & Testing Notes
+
+
+### PR Details & Testing Notes
+
+---
 
 ${pr_body}
 
@@ -181,7 +187,7 @@ teamwork::pull_request_closed() {
   if [ "$pr_merged" == "true" ]; then
     teamwork::add_comment "
 
-## PR Merged
+### PR Merged
 
 **$user** merged a PR: **$pr_title**
 
@@ -200,7 +206,7 @@ PR Link: [$pr_url]($pr_url)
   else
     teamwork::add_comment "
 
-## PR Closed
+### PR Closed
 
 **$user** closed a PR without merging: **$pr_title**
 
