@@ -214,7 +214,6 @@ PR Link: [$pr_url]($pr_url)
 "
     teamwork::remove_tag "PR Open"
     teamwork::remove_tag "PR Approved"
-    teamwork::move_task_to_column "$BOARD_COLUMN_CLOSED"
   fi
 }
 
